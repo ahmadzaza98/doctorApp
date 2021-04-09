@@ -13,6 +13,30 @@ use Illuminate\Support\Facades\Auth;
 class AuthController extends Controller
 {
     use GeneralTrait;
+
+    public function register(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|max:8|confirmed',
+        ]);
+
+        if($validator -> fails()){
+            return response() -> json ($validator -> errors() -> toJson() , 400 );
+        }
+
+        $admin = Admin::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => $request->get('password'),
+        ]);
+
+        $token = JWTAuth::fromUser($admin);
+
+        return response() -> json(compact('admin' , 'token'), 200);
+    }
+
+
     public function login(Request $request){
 
         try{

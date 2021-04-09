@@ -22,6 +22,7 @@ Route::group(['middleware' => ['api', 'changeLanguage']], function() {
 
     Route::group(['prefix' => 'admin'],function (){
     Route::POST('login' , [AuthController::class , 'login'])->name('login');
+    Route::POST('register' , [AuthController::class , 'register']);
     Route::POST('logout' , [AuthController::class , 'logout'])->middleware('assign.guard:admin-api');
     Route::GET('index' , [AdminController::class , 'index']);
     Route::GET('posts' , [PostController::class , 'index']);

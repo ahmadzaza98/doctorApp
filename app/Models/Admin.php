@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Admin extends Authenticatable  implements JWTSubject
 {
     use HasFactory;
-    protected $fillable  = ['email' , 'password'];
+    protected $fillable  = ['name' , 'email' , 'password'];
         // Rest omitted for brevity
 
     /**
