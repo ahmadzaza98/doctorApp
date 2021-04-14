@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
+use App\Models\User;
 use App\Traits\GeneralTrait;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Contracts\JWTSubject;
+
 class AuthController extends Controller
 {
     use GeneralTrait;
@@ -28,12 +31,35 @@ class AuthController extends Controller
         $admin = Admin::create([
             'name' => $request->get('name'),
             'email' => $request->get('email'),
-            'password' => $request->get('password'),
+            'password' => bcrypt($request->get('password')),
         ]);
+        //->sendEmailVerificationNotification();
 
         $token = JWTAuth::fromUser($admin);
 
         return response() -> json(compact('admin' , 'token'), 200);
+    }
+
+    public function UserRegister(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name' => 'required|string',
+            'email' => 'required|email|max:255',
+            'password' => 'required|string|max:8|confirmed',
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson() , 400);
+        }
+
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'password' => bcrypt($request->get('password')),
+        ]);
+
+        $token = JWTAuth::fromUser($user);
+
+        return response() -> json(compact('user' , 'token'),200);
     }
 
 
