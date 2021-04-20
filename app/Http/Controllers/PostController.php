@@ -16,7 +16,7 @@ class PostController extends Controller
     use GeneralTrait;
     public function __construct()
     {
-        $this -> middleware('assign.guard:admin-api');
+       // $this -> middleware('assign.guard:admin-api');
     }
 
 
@@ -34,7 +34,7 @@ class PostController extends Controller
         $post = Post::with('comments')->find($id);
 
         return response() -> json ([
-            'post with its comments' => $post,
+            'result' => $post,
         ],200);
     }
 
