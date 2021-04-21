@@ -5,6 +5,9 @@ use App\Traits\GeneralTrait;
 use App\Models\Comment;
 use App\Models\Post;
 use App\Models\Admin;
+use App\Models\User;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Illuminate\Support\Facades\DB;
@@ -70,7 +73,25 @@ class PostController extends Controller
 
     public function addData(){
          $post = new Post();
+         $post->title = 'post1';
+         $post->content = 'this is content of the post1';
+         $post->patient_id = 1;
 
+         $user = new User();
+         $user->name = 'bassel';
+         $user->email = 'bassel@gmail.com';
+         $user->password = Hash::make('12345678');
+         $user->created_at = Carbon::now();
+        $user->updated_at = Carbon::now();
+
+        $admin = new Admin();
+        $admin->name='ahmad';
+        $admin->email='ahmadzazaz98@gmail.com';
+        $admin->password= Hash::make('12345678');
+
+        return response() -> json([
+            'success' => 'the data has been added successfully',
+        ]);
     }
 
 
