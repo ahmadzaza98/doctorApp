@@ -30,7 +30,7 @@ Route::group(['middleware' => ['api', 'changeLanguage']], function() {
         Route::POST('register' , [AuthController::class , 'UserRegister']);
     });
 
-    Route::POST('data' ,[PostController::class, 'addData']);
+    Route::get('data' ,[PostController::class, 'addData']);
     Route::group(['prefix' => 'admin'],function (){
     Route::POST('login' , [AuthController::class , 'login'])->name('login');
     Route::POST('register' , [AuthController::class , 'register']);
