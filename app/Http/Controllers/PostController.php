@@ -76,6 +76,7 @@ class PostController extends Controller
          $post->title = 'post1';
          $post->content = 'this is content of the post1';
          $post->patient_id = 1;
+        $post->save();
 
          $user = new User();
          $user->name = 'bassel';
@@ -83,11 +84,13 @@ class PostController extends Controller
          $user->password = Hash::make('12345678');
          $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
+        $user->save();
 
         $admin = new Admin();
         $admin->name='ahmad';
         $admin->email='ahmadzazaz98@gmail.com';
         $admin->password= Hash::make('12345678');
+        $admin->save();
 
         return response() -> json([
             'success' => 'the data has been added successfully',
