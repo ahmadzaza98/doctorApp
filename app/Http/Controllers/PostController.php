@@ -68,7 +68,10 @@ class PostController extends Controller
 
     }
 
+    public function addData(){
+         $post = new Post();
 
+    }
 
 
 
